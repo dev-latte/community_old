@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { dbService } from "../fbInstance";
+import { useHistory } from "react-router-dom";
+import { authService, dbService } from "../fbInstance";
 
 const Status = ({ userObj }) => {
     const [status, setStatus] = useState({});
@@ -27,6 +28,12 @@ const Status = ({ userObj }) => {
             setStatus(statusData);
         });
     }, []);
+
+    const history = useHistory();
+    const onLogoutClick = () => {
+        authService.signOut();
+        history.push("/");
+    }
     
     return (
         <>
@@ -49,6 +56,8 @@ const Status = ({ userObj }) => {
                 <li>잔여 포인트: {status.point}</li>
             </ul>
         </div>
+
+        <button onClick={onLogoutClick}>Logout</button>
         </>
     )
 }
