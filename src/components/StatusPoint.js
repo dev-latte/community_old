@@ -76,7 +76,7 @@ const StatusPoint = ({ userObj }) => {
             <>
             <div>Level: {status.level}</div>
             <div>exp: {status.exp}</div>
-            <div>HP: {status.hp}</div>
+            <div>HP: {status.hp * status.level}</div>
             <div>공격력: {status.atk * 10}</div>
             <div>방어력: {status.def * 5}</div>
             <ul>
