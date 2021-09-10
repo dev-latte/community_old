@@ -6,8 +6,8 @@ const StatusPoint = ({ userObj }) => {
     const [status, setStatus] = useState({});
 
     useEffect(() =>{
-        statusAPI({ userObj }, process.env.REACT_APP_DB_STATUS);
         onRealtimeStatus();
+        statusAPI({ userObj }, process.env.REACT_APP_DB_STATUS);
     }, []);
 
     const onRealtimeStatus = async () => {
@@ -24,8 +24,7 @@ const StatusPoint = ({ userObj }) => {
                         point: data.point+3
                     });
                 }
-                console.log("update status", snap.data());
-                setStatus(snap.data());
+                setStatus(snap.data()); 
             });
     }
 
@@ -38,39 +37,34 @@ const StatusPoint = ({ userObj }) => {
 
     // 반복되는 코드 - 수정고려
     const onSetStatusOnFb = (value, statusRef) => {
-        if(value === "str"){
+        if(value === "atk"){
             statusRef.update({
-                STR: status.STR+1,
+                atk: status.atk+1,
                 point: status.point-1
             });
         } else if(value === "int") {
             statusRef.update({
-                INT: status.INT+1,
+                int: status.int+1,
                 point: status.point-1
             });
         } else if(value === "def") {
             statusRef.update({
-                DEF: status.DEF+1,
-                point: status.point-1
-            });
-        } else if(value === "mr") {
-            statusRef.update({
-                MR: status.MR+1,
+                def: status.def+1,
                 point: status.point-1
             });
         } else if(value === "dex"){
             statusRef.update({
-                DEX: status.DEX+1,
+                dex: status.dex+1,
                 point: status.point-1
             });
         } else if(value === "agi") {
             statusRef.update({
-                AGI: status.AGI+1,
+                agi: status.agi+1,
                 point: status.point-1
             });
         } else if(value === "luk") {
             statusRef.update({
-                LUK: status.LUK+1,
+                luk: status.luk+1,
                 point: status.point-1
             })
         }
@@ -82,26 +76,26 @@ const StatusPoint = ({ userObj }) => {
             <>
             <div>Level: {status.level}</div>
             <div>exp: {status.exp}</div>
+            <div>HP: {status.hp}</div>
+            <div>공격력: {status.atk * 10}</div>
+            <div>방어력: {status.def * 5}</div>
             <ul>
-                <li>STR: { status.STR }
-                    {status.point !== 0 && <button onClick={onClickPlus} value="str">+</button>}
+                <li>ATK: { status.atk }
+                    {status.point !== 0 && <button onClick={onClickPlus} value="atk">+</button>}
                 </li>
-                <li>INT: {status.INT}
+                <li>INT: {status.int}
                     {status.point !== 0 && <button onClick={onClickPlus} value="int">+</button>}
                 </li>
-                <li>DEF: {status.DEF}
+                <li>DEF: {status.def}
                     {status.point !== 0 && <button onClick={onClickPlus} value="def">+</button>}
                 </li>
-                <li>MR: {status.MR}
-                    {status.point !== 0 && <button onClick={onClickPlus} value="mr">+</button>}
-                </li>
-                <li>DEX: {status.DEX}
+                <li>DEX: {status.dex}
                     {status.point !== 0 && <button onClick={onClickPlus} value="dex">+</button>}
                 </li>
-                <li>AGI: {status.AGI}
+                <li>AGI: {status.agi}
                     {status.point !== 0 &&<button onClick={onClickPlus} value="agi">+</button>}
                 </li>
-                <li>LUK: {status && status.LUK}
+                <li>LUK: {status && status.luk}
                     {status.point !== 0 && <button onClick={onClickPlus} value="luk">+</button>}
                 </li>
                 <li>잔여 포인트: {status.point}</li>

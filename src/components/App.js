@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import { authService } from '../fbInstance';
 import AppRouter from './Router';
 
-
-
 const App = () => {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
-    authService.onAuthStateChanged(user => {
+    userInformation();
+  }, []);
+
+
+  const userInformation = async () => {
+    await authService.onAuthStateChanged(user => {
       if(user) {
         setUserObj({
           displayName: user.displayName,
@@ -22,7 +25,7 @@ const App = () => {
       }
       setInit(true);
     });
-  }, []);
+  }
 
   // const refreshUser = () => {
   //   const user = authService.currentUser;

@@ -1,4 +1,3 @@
-import React from "react";
 import { dbService } from "../fbInstance";
 
 export const statusAPI = async ({userObj}, dbCollection) => {
@@ -14,13 +13,13 @@ export const statusAPI = async ({userObj}, dbCollection) => {
                 dbService.collection(dbCollection).doc(userObj.uid).set({
                     level: 1,
                     exp: 0,
-                    STR: 1,
-                    INT: 1,
-                    DEF: 1,
-                    MR: 1,
-                    DEX: 1,
-                    AGI: 1,
-                    LUK: 1,
+                    hp: 50,
+                    def: 1,
+                    atk: 1, // 공격
+                    int: 1, // 버프 및 힐링
+                    dex: 1, // 회피
+                    agi: 1, // 크리티컬 확률
+                    luk: 1, // 크리티컬 피해량 & 랜덤 치명타
                     point: 10,
                     uid: userObj.uid
                 });
