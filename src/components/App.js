@@ -36,12 +36,12 @@ const App = () => {
   return (
     <div>
       {init ? (
-        // 나중에 폰트어썸에서 움직이는 이미지로 수정 예정
         <AppRouter
           isLoggedIn={Boolean(userObj)}
           userObj={userObj}
         />
         ) : (
+          // 나중에 폰트어썸에서 움직이는 이미지로 수정 예정
           "Loading..."
         )
       }
