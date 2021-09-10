@@ -1,49 +1,30 @@
 import React, { useEffect, useState } from "react";
+import { statusAPI } from "../common/StatusAPI";
 import { dbService } from "../fbInstance";
 
 const StatusPoint = ({ userObj }) => {
     const [status, setStatus] = useState({});
 
     useEffect(() =>{
-        onStatusData();
+        statusAPI({ userObj }, process.env.REACT_APP_DB_STATUS);
         onRealtimeStatus();
     }, []);
-
-    const onStatusData = async () => {
-        let statusData;
-        await dbService
-            .collection(process.env.REACT_APP_DB_STATUS)
-            .where("uid", "==", userObj.uid)
-            .get()
-            .then((doc) => {
-                const data = doc.empty ? undefined : doc.docs[0];
-                if (data === undefined ? false : data.exists) {
-                    statusData = data.data();
-                    console.log("데이터 존재함", statusData);
-                } else {
-                    statusData = {
-                        STR: 1,
-                        INT: 1,
-                        DEF: 1,
-                        MR: 1,
-                        DEX: 1,
-                        AGI: 1,
-                        LUK: 1,
-                        point: 10,
-                        uid: userObj.uid
-                    };
-                    console.log("데이터 없음", statusData);
-                    dbService.collection(process.env.REACT_APP_DB_STATUS).doc(userObj.uid).set(statusData);
-                }
-            setStatus(statusData);
-        }).catch((error) => {
-            console.log("Error getting documents: ", error);
-        });
-    }
 
     const onRealtimeStatus = async () => {
         await dbService.collection(process.env.REACT_APP_DB_STATUS).doc(userObj.uid)
             .onSnapshot((snap) => {
+                const data = snap.data();
+                if(!data) { return; } 
+                // To do : 레벨업 구간 책정하기
+                if(100 <= data.exp) {
+                    console.log("level up!");
+                    dbService.collection(process.env.REACT_APP_DB_STATUS).doc(userObj.uid).update({
+                        level: data.level+1,
+                        exp: 0,
+                        point: data.point+3
+                    });
+                }
+                console.log("update status", snap.data());
                 setStatus(snap.data());
             });
     }
@@ -98,6 +79,9 @@ const StatusPoint = ({ userObj }) => {
     return (
         <div>
             {status &&
+            <>
+            <div>Level: {status.level}</div>
+            <div>exp: {status.exp}</div>
             <ul>
                 <li>STR: { status.STR }
                     {status.point !== 0 && <button onClick={onClickPlus} value="str">+</button>}
@@ -122,6 +106,7 @@ const StatusPoint = ({ userObj }) => {
                 </li>
                 <li>잔여 포인트: {status.point}</li>
             </ul>
+            </>
             }
         </div>
         
