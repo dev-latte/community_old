@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Authentication from "../routes/Authentication";
 import Home from "../routes/Home";
+import Inventory from "./Inventory";
 import Navigation from "./Navigation";
 import Status from "./Status";
 
@@ -19,11 +20,14 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                         <Route exact path="/status">
                             <Status userObj={userObj} /> 
                         </Route>
+                        <Route exact path="/inventory">
+                            <Inventory userObj={userObj} /> 
+                        </Route>
                         </>
                     ) : (
                         <>
                         <Route exact path="/">
-                            <Authentication/>
+                            <Authentication userObj={userObj}/>
                         </Route>
                         </>
                     )}

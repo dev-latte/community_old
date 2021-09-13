@@ -1,17 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { statusAPI } from "../common/StatusAPI";
+import { firebaseAPI } from "../common/FirestoreAPI";
 import { dbService } from "../fbInstance";
 
 const StatusPoint = ({ userObj }) => {
-    const [status, setStatus] = useState({});
+    const initStatus = {
+        level: 1,
+        exp: 0,
+        hp: 50,
+        def: 1, // 방어력
+        atk: 1, // 공격
+        int: 1, // 버프 및 힐링
+        dex: 1, // 회피
+        agi: 1, // 크리티컬 확률
+        luk: 1, // 크리티컬 피해량 & 랜덤 치명타
+        point: 10,
+        uid: userObj.uid
+    };
+    const [status, setStatus] = useState(initStatus);
 
-    useEffect(() =>{
-        onRealtimeStatus();
-        statusAPI({ userObj }, process.env.REACT_APP_DB_STATUS);
+    // 여기서 구독관련된 문제 처리하기
+    useEffect(() => {
+        let isSubscribed = true;
+        if(isSubscribed){
+            firebaseAPI({ userObj }, process.env.REACT_APP_DB_STATUS, status);
+            onRealtimeStatus();
+        }
+        return () => isSubscribed = false;
     }, []);
 
     const onRealtimeStatus = async () => {
-        await dbService.collection(process.env.REACT_APP_DB_STATUS).doc(userObj.uid)
+        try{
+            await dbService.collection(process.env.REACT_APP_DB_STATUS).doc(userObj.uid)
             .onSnapshot((snap) => {
                 const data = snap.data();
                 if(!data) { return; } 
@@ -26,6 +45,10 @@ const StatusPoint = ({ userObj }) => {
                 }
                 setStatus(snap.data()); 
             });
+        }catch(error){
+            console.log(error);
+        }
+
     }
 
     const onClickPlus = async (e) => {
