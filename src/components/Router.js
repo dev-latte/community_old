@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Admin from "../routes/Admin";
 import Authentication from "../routes/Authentication";
 import Home from "../routes/Home";
 import Inventory from "./Inventory";
@@ -22,6 +23,9 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                         </Route>
                         <Route exact path="/inventory">
                             <Inventory userObj={userObj} /> 
+                        </Route>
+                        <Route exact path="/admin">
+                            <Admin userObj={userObj}/>
                         </Route>
                         </>
                     ) : (
