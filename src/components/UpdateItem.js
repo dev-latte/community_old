@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-
 import { createData } from "../common/FirestoreAPI";
 import { uploadImage } from "../common/StorageAPI";
 
-const UpdateItem = ({ userObj }) => {
+const UpdateItem = () => {
     const [imageFile, setImageFile] = useState("");
 
     // 데이터 업데이트
@@ -11,29 +10,22 @@ const UpdateItem = ({ userObj }) => {
         // validation check 필수
         e.preventDefault();
         uploadImage(imageFile);
-        console.log(imageFile);
         try {
 
             //여기서 e.target.querySelector() 나중에 수정하기
             const data = {
                 photoUrl: imageFile,
-                id: e.target.querySelector(".weapon-id").value,
-                grade: Number(e.target.querySelector(".weapon-grade").value),
-                name: e.target.querySelector(".weapon-name").value,
-                hp: Number(e.target.querySelector(".weapon-hp").value),
-                atk: Number(e.target.querySelector(".weapon-atk").value),
-                def: Number(e.target.querySelector(".weapon-def").value),
-                int: Number(e.target.querySelector(".weapon-int").value),
-                dex: Number(e.target.querySelector(".weapon-dex").value),
-                agi: Number(e.target.querySelector(".weapon-agi").value),
-                luk: Number(e.target.querySelector(".weapon-luk").value)
+                id: e.target.querySelector(".item-id").value,
+                kinds: e.target.querySelector(".item-kinds").value,
+                name: e.target.querySelector(".item-name").value,
+                ability: e.target.querySelector(".item-efficacy").value,
+                subscription: e.target.querySelector(".item-subscription").value
             }
 
-            createData(process.env.REACT_APP_DB_MEMORY_CARDS, data);
+            createData(process.env.REACT_APP_DB_ITEMS, data);
 
             // reset page
             onClearInputForm(e);
-
             setImageFile("");
 
         }catch(error){
@@ -64,13 +56,25 @@ const UpdateItem = ({ userObj }) => {
     return (
         <form onSubmit={onSubmit}>
             <fieldset>
-                <legend>메모리카드 추가</legend>
+                <legend>아이템 추가</legend>
                 {/* 아이템 이미지 */}
-                <label htmlFor="weapon-image">이미지 : </label>
-                <input type="file" accept="image/*" onChange={onSelectImage} className="weapon-image" placeholder="메모리카드의 사진을 업로드 해주세요."/>
+                <label htmlFor="item-image">이미지 : </label>
+                <input type="file" accept="image/*" onChange={onSelectImage} className="item-image" placeholder="아이템의 사진을 업로드 해주세요."/>
                 {/* 아이템 아이디 */}
-                <label htmlFor="weapon-id">ID : </label>
-                <input type="text" className="weapon-id" placeholder="아이디를 입력해주세요."/>
+                <label htmlFor="item-id">ID : </label>
+                <input type="text" className="item-id" placeholder="아이디를 입력해주세요."/>
+                {/* 아이템 종류 */}
+                <label htmlFor="item-kinds">KINDS : </label>
+                <input type="text" className="item-kinds" placeholder="아이템 종류를 입력해주세요."/>
+                {/* 아이템 이름 */}
+                <label htmlFor="item-name">NAME : </label>
+                <input type="text" className="item-name" placeholder="아이템 이름을 입력해주세요."/>
+                {/* 아이템 효능 */}
+                <label htmlFor="item-efficacy">EFFICACY : </label>
+                <input type="text" className="item-efficacy" placeholder="아이템 효과를 입력해주세요."/>
+                {/* 아이템 설명 */}
+                <label htmlFor="item-subscription">SUBSCRIPTION : </label>
+                <input type="text" className="item-subscription" placeholder="아이템 설명을 입력해주세요."/>                          
             </fieldset>            
             <input type="submit" value="submit"/>
         </form>
