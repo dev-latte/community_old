@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { getMemoryCardInfo } from "../common/FirestoreAPI";
 
 const RandomItem = ({userObj}) => {
-    const [memoryCard, setMemoryCard] = useState({});
-
+    const [memoryCard, setMemoryCard] = useState(null);
     const onClickEvent = (e) => {
         const grade = isGradeCheck(Math.random() * 100);
         getMemoryCardInfo(userObj.uid, process.env.REACT_APP_DB_MEMORY_CARDS, grade).then(data => {
@@ -26,6 +25,7 @@ const RandomItem = ({userObj}) => {
             <button onClick={onClickEvent}>1회 뽑기!</button>
             <div>
                 {memoryCard && <>
+                                <img src={memoryCard.photoUrl} alt="memoryCard_img" />
                                 <div>{memoryCard.name}</div>
                                 <div>{memoryCard.grade}</div>
                                 <div>{memoryCard.hp}</div>

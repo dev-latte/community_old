@@ -16,7 +16,7 @@ const UpdateMemoryCard = () => {
             const data = {
                 photoUrl: imageFile,
                 id: e.target.querySelector(".weapon-id").value,
-                grade: Number(e.target.querySelector(".weapon-grade").value),
+                grade: e.target.querySelector(".weapon-grade").value,
                 name: e.target.querySelector(".weapon-name").value,
                 hp: Number(e.target.querySelector(".weapon-hp").value),
                 atk: Number(e.target.querySelector(".weapon-atk").value),
