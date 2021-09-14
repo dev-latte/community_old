@@ -1,10 +1,11 @@
 import React from "react";
-import UpdateItem from "../components/UpdateItem";
+import UpdateMemoryCard from "../components/UpdateMemoryCard";
 
 const Admin = ({userObj}) => {
     return (
         <div className="container">
-            <UpdateItem userObj={userObj}/>
+            {/* <UpdateItem userObj={userObj}/> */}
+            <UpdateMemoryCard userObj={userObj}/>
         </div>
     )
 }

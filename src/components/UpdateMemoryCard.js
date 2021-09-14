@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-
 import { createData } from "../common/FirestoreAPI";
 import { uploadImage } from "../common/StorageAPI";
 
-const UpdateItem = ({ userObj }) => {
+const UpdateMemoryCard = () => {
     const [imageFile, setImageFile] = useState("");
 
     // 데이터 업데이트
     const onSubmit = async (e) => {
         // validation check 필수
         e.preventDefault();
+        // upload image
         uploadImage(imageFile);
-        console.log(imageFile);
         try {
-
             //여기서 e.target.querySelector() 나중에 수정하기
             const data = {
                 photoUrl: imageFile,
@@ -28,14 +26,11 @@ const UpdateItem = ({ userObj }) => {
                 agi: Number(e.target.querySelector(".weapon-agi").value),
                 luk: Number(e.target.querySelector(".weapon-luk").value)
             }
-
+            // update data
             createData(process.env.REACT_APP_DB_MEMORY_CARDS, data);
 
-            // reset page
             onClearInputForm(e);
-
             setImageFile("");
-
         }catch(error){
             console.log(error);
         }
@@ -71,10 +66,37 @@ const UpdateItem = ({ userObj }) => {
                 {/* 아이템 아이디 */}
                 <label htmlFor="weapon-id">ID : </label>
                 <input type="text" className="weapon-id" placeholder="아이디를 입력해주세요."/>
+                {/* 아이템 등급 */}
+                <label htmlFor="weapon-grade">RANK : </label>
+                <input type="text" className="weapon-grade" placeholder="등급을 입력해주세요."/>
+                {/* 아이템 이름 */}
+                <label htmlFor="weapon-name">NAME : </label>
+                <input type="text" className="weapon-name" placeholder="이름을 입력해주세요."/>
+                {/* 아이템 능력치 - HP */}
+                <label htmlFor="weapon-name">HP : </label>
+                <input type="text" className="weapon-hp" placeholder="HP를 입력해주세요."/>
+                {/* 아이템 능력치 - ATK */}
+                <label htmlFor="weapon-name">ATK : </label>
+                <input type="text" className="weapon-atk" placeholder="ATK를 입력해주세요."/>
+                {/* 아이템 능력치 - DEF */}
+                <label htmlFor="weapon-name">DEF : </label>
+                <input type="text" className="weapon-def" placeholder="DEF를 입력해주세요."/>
+                {/* 아이템 능력치 - INT */}
+                <label htmlFor="weapon-name">INT : </label>
+                <input type="text" className="weapon-int" placeholder="INT를 입력해주세요."/>
+                {/* 아이템 능력치 - DEX */}
+                <label htmlFor="weapon-name">DEX : </label>
+                <input type="text" className="weapon-dex" placeholder="DEX를 입력해주세요."/>
+                {/* 아이템 능력치 - AGI */}
+                <label htmlFor="weapon-name">AGI : </label>
+                <input type="text" className="weapon-agi" placeholder="AGI를 입력해주세요."/>
+                {/* 아이템 능력치 - LUK */}
+                <label htmlFor="weapon-name">LUK : </label>
+                <input type="text" className="weapon-luk" placeholder="LUK을 입력해주세요."/>
             </fieldset>            
             <input type="submit" value="submit"/>
         </form>
     )
 }
 
-export default UpdateItem;
+export default UpdateMemoryCard;
