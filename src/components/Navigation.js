@@ -11,6 +11,7 @@ const Navigation = () => {
                 <li><Link to="/status">Status</Link></li>
                 <li><Link to="/inventory">Inventory</Link></li>
                 <li><Link to="/admin">Admin</Link></li>
+                <li><Link to="/randomItem">Ramdom Item!</Link></li>
             </ul>
         </nav>
     )

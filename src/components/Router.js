@@ -5,6 +5,7 @@ import Authentication from "../routes/Authentication";
 import Home from "../routes/Home";
 import Inventory from "./Inventory";
 import Navigation from "./Navigation";
+import RandomItem from "./RandomItem";
 import Status from "./Status";
 
 const AppRouter = ({ isLoggedIn, userObj }) => {
@@ -26,6 +27,9 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                         </Route>
                         <Route exact path="/admin">
                             <Admin userObj={userObj}/>
+                        </Route>
+                        <Route exact path="/randomItem">
+                            <RandomItem userObj={userObj}/>
                         </Route>
                         </>
                     ) : (
