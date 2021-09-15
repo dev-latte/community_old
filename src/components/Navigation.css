@@ -11,8 +11,7 @@
 
 .menu li {
     margin: 40px;
+    font: 1.0em "Fira Sans", serif;
+    border: 1px solid black;
 }
 
-.menu li a {
-    font: 1.0em "Fira Sans", serif;
-}

@@ -29,11 +29,10 @@
 /* end profile */
 
 .top-util .util-inventory {
-    padding: 10px 0 10px 0;
     width: 100px;
     height: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     border: 1px solid black;
-    cursor: pointer;
 }

@@ -1,6 +1,6 @@
 .status-interface{
     width: 300px;
-    height: 100vh;
+    height: 300px;
     position: absolute;
     top: -200%;
     right: 0px;
@@ -9,5 +9,5 @@
 }
 
 .status-interface.on{
-    top: 70px;
+    top: 120px;
 }

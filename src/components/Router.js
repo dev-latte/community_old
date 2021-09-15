@@ -4,6 +4,7 @@ import Admin from "../routes/Admin";
 import Authentication from "../routes/Authentication";
 import Home from "../routes/Home";
 import About from "./About";
+import Equipment from "./Equipment";
 import Member from "./Member";
 import Navigation from "./Navigation";
 import RandomItem from "./RandomItem";
@@ -44,6 +45,9 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                         </Route>
                         <Route exact path="/admin">
                             <Admin userObj={userObj}/>
+                        </Route>
+                        <Route exact path="/equipment">
+                            <Equipment/>
                         </Route>
                         </>
                     ) : (

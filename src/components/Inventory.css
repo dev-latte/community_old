@@ -1,7 +1,28 @@
-.item {
-    width: 50px;
-    height: 50px;
+.inventory {
+    display: none;
+    width: 500px;
+    height: 250px;
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(5, 50px);
+    background-color: #444;
+    z-index: 5;
+}
+
+.inventory.on {
+    display: grid;
+}
+
+.inventory.on div {
     border: 1px solid black;
+}
+
+.inventory.on .item {
+    cursor: pointer;
+}
+
+.inventory-btn {
+    width: 100%;
+    height: 100%;
 }
 
 .item img {

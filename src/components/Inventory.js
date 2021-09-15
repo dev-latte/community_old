@@ -32,6 +32,7 @@ const Inventory = ({userObj}) => {
             });    
         }
         setIsOn(!isOn);
+        document.querySelector(".inventory").classList.toggle("on");
     }
 
     const onGetItemInformation = (e) => {
@@ -40,13 +41,31 @@ const Inventory = ({userObj}) => {
         console.log(information);
     }
 
-    return (
-        <>
-            <button onClick={onOpenInventory}>Inventory Open</button>
-            {(userInventory && isOn) && userInventory.memoryCardId.map((memoryCard, index) => 
+    const printInventory = (count) => {
+        let arr = [];
+        userInventory.memoryCardId.map((memoryCard, index) => 
+            arr.push(
                 <div key={index} className="item" onClick={onGetItemInformation}>
                     <img src={memoryCard.photoUrl} alt="" className={memoryCard.id}/>
-                </div>)}
+                </div>
+            )
+        );
+
+        const length = arr.length;
+        for(let i = length; i < count; i++) {
+            arr.push(<div key={i} className={i}></div>);
+        }
+
+        return arr;
+    }
+
+    return (
+        <>
+            <button onClick={onOpenInventory} className="inventory-btn">Inventory Open</button>
+            {userInventory &&
+                <div className="inventory">
+                { printInventory(50) }   
+            </div>}
         </>
     )
 }
