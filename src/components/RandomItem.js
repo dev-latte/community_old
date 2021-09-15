@@ -21,7 +21,7 @@ const RandomItem = ({userObj}) => {
     }
 
     return (
-        <>
+        <div className="main">
             <button onClick={onClickEvent}>1회 뽑기!</button>
             <div>
                 {memoryCard && <>
@@ -36,9 +36,9 @@ const RandomItem = ({userObj}) => {
                                 <div>{memoryCard.agi}</div>
                                 <div>{memoryCard.luk}</div>
                                 </>
-                                }
+                }
             </div>
-        </>
+        </div>
     )
 }
 

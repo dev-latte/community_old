@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { authService } from '../fbInstance';
 import AppRouter from './Router';
+import "./App.css";
+import "./Reset.css";
 
 const App = () => {
   const [init, setInit] = useState(false);
@@ -23,7 +25,7 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       {init ? (
         <AppRouter
           isLoggedIn={Boolean(userObj)}
@@ -34,7 +36,6 @@ const App = () => {
           "Loading..."
         )
       }
-
     </div>
   );
 }

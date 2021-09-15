@@ -1,0 +1,39 @@
+.top-util{
+    grid-area: 1 / 2 / 3 / 3;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+
+/* start profile */
+.top-util .util-profile {
+    padding: 10px 0 10px 0;
+    width: 100px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: 30px;
+    border-left: 1px solid black;
+    cursor: pointer;
+}
+
+.top-util .util-profile .util-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+/* end profile */
+
+.top-util .util-inventory {
+    padding: 10px 0 10px 0;
+    width: 100px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    cursor: pointer;
+}

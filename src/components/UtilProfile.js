@@ -1,8 +1,6 @@
 import React from "react";
-import StatusPoint from "./StatusPoint";
-import "./Status.css"
 
-const Status = ({ userObj }) => {
+const UtilProfile = ({userObj}) => {
     const onClickUserInfo = (e) => {
         const test = document.querySelector(".status-interface");
         if(!test.classList.contains("on")) {
@@ -11,13 +9,15 @@ const Status = ({ userObj }) => {
             test.classList.remove("on");
         }
     }
-    
+
     return (
-        <div className="status-interface">
-            <StatusPoint userObj={userObj}/>
-            <button onClick={onClickUserInfo}>Close</button>
+        <>
+        <div className="util-profile" onClick={onClickUserInfo}>
+            <span>{userObj.displayName}</span>
+            <img src={userObj.photoUrl} className="util-image" alt="Profile" />
         </div>
+        </>
     )
 }
 
-export default Status;
+export default UtilProfile;

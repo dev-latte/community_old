@@ -1,11 +1,9 @@
 import React from "react";
+import "./Home.css"
 
 const Home = ({ userObj }) => {
     return (
-        <>
-        <div>Ta-Da! Home!</div>
-        <img src={userObj.photoUrl} alt="Profile" />
-        </>
+        <div className="main">home</div>
     )
 }
 

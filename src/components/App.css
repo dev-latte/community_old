@@ -1,0 +1,21 @@
+#root{
+    height: 100vh;
+}
+
+/* 1920px x 1080px */
+.container {
+    width: 100vw;
+    /* width: 1680px; */
+    height: 1050px;
+    border: 1px solid black;
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    grid-template-rows: 70px auto;
+}
+
+/* main page default setting */
+.main {
+    border: 1px solid black;
+    grid-area: 2 / 2 / 3 / 3;
+}

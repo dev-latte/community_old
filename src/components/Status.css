@@ -1,0 +1,13 @@
+.status-interface{
+    width: 300px;
+    height: 100vh;
+    position: absolute;
+    top: -200%;
+    right: 0px;
+    border: 1px solid violet;
+    transition: 1s;
+}
+
+.status-interface.on{
+    top: 70px;
+}
