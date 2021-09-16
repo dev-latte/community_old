@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { authService } from '../fbInstance';
 import AppRouter from './Router';
 import "./App.css";
-import "./Reset.css";
+import "boxicons";
 
 const App = () => {
   const [init, setInit] = useState(false);
@@ -32,8 +32,7 @@ const App = () => {
           userObj={userObj}
         />
         ) : (
-          // 나중에 폰트어썸에서 움직이는 이미지로 수정 예정
-          "Loading..."
+          <box-icon name='loader' animation='spin'/>
         )
       }
     </div>

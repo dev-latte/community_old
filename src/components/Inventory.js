@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { createElement, useState } from "react";
 import { firebaseAPI } from "../common/FirestoreAPI";
 
 import "./Inventory.css"
@@ -33,30 +33,51 @@ const Inventory = ({userObj}) => {
         }
         setIsOn(!isOn);
         document.querySelector(".inventory").classList.toggle("on");
+
+        onCloseItemInformation();
     }
 
     const onGetItemInformation = (e) => {
         const information = userInventory.memoryCardId.filter(memoryCard => memoryCard.id === e.target.className);
-        // 정보가져오는것까진 ok, 이걸 설명창으로 뛰워야함... 후에 css를 이용해서 작업하기
-        console.log(information);
+
+        const modal = document.querySelector(".item-modal");
+        modal.style.left = `${e.clientX}px`;
+        modal.style.top = `${e.clientY}px`;
+        modal.appendChild(onCreateItemInformation(information[0]));
+        
+        if(modal.classList.contains("hidden")) {
+            modal.classList.remove("hidden");
+        }
+        
+        // const count = information.length; // 나중에 여러개 소지 가능한 아이템이나올경우
     }
 
-    const printInventory = (count) => {
-        let arr = [];
-        userInventory.memoryCardId.map((memoryCard, index) => 
-            arr.push(
-                <div key={index} className="item" onClick={onGetItemInformation}>
-                    <img src={memoryCard.photoUrl} alt="" className={memoryCard.id}/>
-                </div>
-            )
-        );
+    const onCreateItemInformation = (information, e) => {
+        const itemInfo = document.querySelector(".item-information");
+        
+        const name = document.querySelector(".item-name");
+        const grade = document.querySelector(".item-grade");
+        const info = document.querySelector(".item-statust");
+        
+        name.innerHTML = information.name;
+        grade.innerHTML = information.grade;
+        info.innerHTML = `ATK : ${information.atk}<br>
+                        INT : ${information.int}<br>
+                        HP : ${information.hp}<br>
+                        DEF : ${information.def}<br>
+                        DEX : ${information.dex}<br>
+                        AGI : ${information.agi}<br>
+                        LUK : ${information.luk}<br>`;
 
-        const length = arr.length;
-        for(let i = length; i < count; i++) {
-            arr.push(<div key={i} className={i}></div>);
-        }
+        itemInfo.appendChild(name);
+        itemInfo.appendChild(grade);
+        itemInfo.appendChild(info);
 
-        return arr;
+        return itemInfo;
+    }
+
+    const onCloseItemInformation = () => {
+        document.querySelector(".item-modal").classList.add("hidden");
     }
 
     return (
@@ -64,8 +85,21 @@ const Inventory = ({userObj}) => {
             <button onClick={onOpenInventory} className="inventory-btn">Inventory Open</button>
             {userInventory &&
                 <div className="inventory">
-                { printInventory(50) }   
-            </div>}
+                    { userInventory.memoryCardId.map((memoryCard, index) => 
+                        <div key={index} className="item" onClick={onGetItemInformation}>
+                        <img src={memoryCard.photoUrl} alt="" className={memoryCard.id}/>
+                        </div>
+                    )}   
+                    <div className="item-modal hidden">
+                        <div className="item-information">
+                            <h4 className="item-name"/>
+                            <h4 className="item-grade"/>
+                            <div className="item-statust"/>
+                        </div>
+                        {/* 버튼을 어떤식으로할지 고민 더 하기 */}
+                        <button onClick={onCloseItemInformation}>close</button>
+                    </div>
+                </div>}
         </>
     )
 }
