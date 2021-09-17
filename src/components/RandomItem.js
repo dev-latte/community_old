@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { getMemoryCardInfo } from "../common/FirestoreAPI";
 
 const RandomItem = ({userObj}) => {
@@ -24,7 +24,7 @@ const RandomItem = ({userObj}) => {
         <div className="main">
             <button onClick={onClickEvent}>1회 뽑기!</button>
             <div>
-                {memoryCard && <>
+                {memoryCard && <Fragment>
                                 <img src={memoryCard.photoUrl} alt="memoryCard_img" />
                                 <div>{memoryCard.name}</div>
                                 <div>{memoryCard.grade}</div>
@@ -35,7 +35,7 @@ const RandomItem = ({userObj}) => {
                                 <div>{memoryCard.dex}</div>
                                 <div>{memoryCard.agi}</div>
                                 <div>{memoryCard.luk}</div>
-                                </>
+                                </Fragment>
                 }
             </div>
         </div>

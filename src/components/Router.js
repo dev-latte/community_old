@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Admin from "../routes/Admin";
 import Authentication from "../routes/Authentication";
@@ -14,48 +14,49 @@ import UtilMenu from "./UtilMenu";
 
 const AppRouter = ({ isLoggedIn, userObj }) => {
     return (
-        <>
-            <BrowserRouter>
-                { isLoggedIn && <>
-                                <Navigation userObj={userObj}/>
-                                <UtilMenu userObj={userObj}/>
-                                <Status userObj={userObj} />
-                                </>}
-                <Switch>
-                    { isLoggedIn ? (
-                        <>
-                        <Route exact path="/">
-                            <Home userObj={userObj}/>
-                        </Route>
-                        <Route exact path="/about">
-                            <About/>
-                        </Route>
-                        <Route exact path="/member">
-                            <Member/>
-                        </Route>
-                        <Route exact path="/shop">
-                            <Shop/>
-                        </Route>
-                        <Route exact path="/randomItem">
-                            <RandomItem userObj={userObj}/>
-                        </Route>
-                        <Route exact path="/room">
-                            <Room/>
-                        </Route>
-                        <Route exact path="/admin">
-                            <Admin userObj={userObj}/>
-                        </Route>
-                        </>
-                    ) : (
-                        <>
-                        <Route exact path="/">
-                            <Authentication userObj={userObj}/>
-                        </Route>
-                        </>
-                    )}
-                </Switch>
-            </BrowserRouter>
-        </>
+        <BrowserRouter>
+            { isLoggedIn && <Fragment>
+                            <Navigation userObj={userObj}/>
+                            <UtilMenu userObj={userObj}/>
+                            <Status userObj={userObj} />
+                            </Fragment>
+            }
+            { isLoggedIn ? (
+                <Fragment>
+                    <Switch>
+                    <Route exact path="/">
+                        <Home userObj={userObj}/>
+                    </Route>
+                    <Route exact path="/about">
+                        <About/>
+                    </Route>
+                    <Route exact path="/member">
+                        <Member/>
+                    </Route>
+                    <Route exact path="/shop">
+                        <Shop/>
+                    </Route>
+                    <Route exact path="/randomItem">
+                        <RandomItem userObj={userObj}/>
+                    </Route>
+                    <Route exact path="/room">
+                        <Room/>
+                    </Route>
+                    <Route exact path="/admin">
+                        <Admin userObj={userObj}/>
+                    </Route>
+                    </Switch>
+                </Fragment>
+            ) : (
+                <Fragment>
+                    <Switch>
+                    <Route exact path="/">
+                        <Authentication/>
+                    </Route>
+                    </Switch>
+                </Fragment>
+            )}
+        </BrowserRouter>
     )
 }
 

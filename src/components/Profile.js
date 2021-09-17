@@ -12,12 +12,13 @@ const Profile = ({userObj}) => {
     }
 
     return (
-        <>
         <div className="profile-details" onClick={onClickUserInfo}>
             <img src={userObj.photoUrl} alt="Profile" />
-            <span>{userObj.displayName}</span>
+            <div className="details">
+                <span className="name">{userObj.displayName}</span>
+                <span className="twitter-id">@{userObj.twitterId}</span>
+            </div>
         </div>
-        </>
     )
 }
 

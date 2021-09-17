@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { authService } from '../fbInstance';
 import AppRouter from './Router';
 import "./App.css";
 import "boxicons";
+import { getData } from '../common/FirestoreAPI';
 
 const App = () => {
   const [init, setInit] = useState(false);
@@ -11,11 +12,14 @@ const App = () => {
   useEffect(() => {
     authService.onAuthStateChanged(user => {
       if(user) {
-        setUserObj({
-          displayName: user.displayName,
-          uid: user.uid,
-          photoUrl: user.photoURL,
-          updateProfile: (args) => user.updateProfile(args)
+        getData(user.providerData[0].uid, process.env.REACT_APP_DB_TWITTER_INFO).then(data => {
+          setUserObj({
+            displayName: user.displayName,
+            uid: user.uid,
+            photoUrl: user.photoURL,
+            twitterId: data.screen_name,
+            updateProfile: (args) => user.updateProfile(args)
+          });
         });
       } else {
         setUserObj(null);
@@ -36,7 +40,7 @@ const App = () => {
         )
       }
     </div>
-  );
+  )
 }
 
 export default App;

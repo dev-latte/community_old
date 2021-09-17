@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createData } from "../common/FirestoreAPI";
 import { uploadImage } from "../common/StorageAPI";
 
-const UpdateMemoryCard = () => {
+const UploadMemoryCard = () => {
     const [imageFile, setImageFile] = useState("");
 
     // 데이터 업데이트
@@ -99,4 +99,4 @@ const UpdateMemoryCard = () => {
     )
 }
 
-export default UpdateMemoryCard;
+export default UploadMemoryCard;

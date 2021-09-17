@@ -4,7 +4,6 @@ import Logo from "./Logo";
 import Logout from "./Logout";
 import "./Navigation.css";
 import 'boxicons';
-import UtilProfile from "./Profile";
 import Profile from "./Profile";
 
 const Navigation = ({userObj}) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { firebaseAPI } from "../common/FirestoreAPI";
 import { dbService } from "../fbInstance";
 
@@ -96,7 +96,7 @@ const StatusPoint = ({ userObj }) => {
     return (
         <div>
             {status &&
-            <>
+            <Fragment>
             <div>Level: {status.level}</div>
             <div>exp: {status.exp}</div>
             <div>HP: {status.hp * status.level}</div>
@@ -123,7 +123,7 @@ const StatusPoint = ({ userObj }) => {
                 </li>
                 <li>잔여 포인트: {status.point}</li>
             </ul>
-            </>
+            </Fragment>
             }
         </div>
         

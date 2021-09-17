@@ -19,13 +19,38 @@ export const firebaseAPI = async ({userObj}, dbCollection, defaultData) => {
 }
 
 // add data on firebase
-export const createData = async (dbCollection, data) => {
+export const createData = async (uid, dbCollection, data) => {
+    console.log(`Calling status API from ${dbCollection}`);
+    await dbService.collection(dbCollection).doc(uid).set(data)
+    .catch(error => {
+        console.error("Error adding document: ", error);
+    });
+}
+
+export const createDataWithoutUid = async (dbCollection, data) => {
     console.log(`Calling status API from ${dbCollection}`);
     await dbService.collection(dbCollection).add(data)
     .catch(error => {
         console.error("Error adding document: ", error);
     });
 }
+
+// get data
+export const getData = async (uid, dbCollection) => {
+    console.log(`Calling status API from ${dbCollection}`);
+    return await dbService.collection(dbCollection)
+        .where("id_str", "==", uid)
+        .get()
+        .then((doc) => {
+            const data = doc.empty ? undefined : doc.docs[0];
+            if (data === undefined ? false : data.exists) {
+                return data.data();
+            }
+        }).catch((error) => {
+            console.log("Error getting documents: ", error);
+        });
+}
+
 
 // update userInventoryData for memoryCardId
 export const updateData = async (uid, dbCollection, data) => {

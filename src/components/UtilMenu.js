@@ -5,11 +5,9 @@ import "./UtilMenu.css"
 
 const UtilMenu = ({userObj}) => {
     return (
-        <>
         <div className="top-util">
             <UtilInventory userObj={userObj}/>
         </div>
-        </>
     )
 }
 

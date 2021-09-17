@@ -4,14 +4,6 @@
 ul, ol, li { list-style: none; }
 a { text-decoration: none; }
 
-#root{
-    position: relative;
-    min-height: 100vh;
-    width: 100%;
-    overflow: hidden;
-}
-
-/* 1920px x 1080px */
 .container {
     width: 100vw;
     height: 100vh;

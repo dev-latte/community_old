@@ -3,7 +3,6 @@ import "./Logo.css";
 
 const Logo = () => {
     return (
-        <>
         <div className="logo_content">
             <div className="logo">
                 <box-icon name='game'/>
@@ -11,8 +10,6 @@ const Logo = () => {
             </div>
             <box-icon name='menu' id="nav_btn"/>
         </div>
-
-        </>
     )
 }
 

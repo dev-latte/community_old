@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { firebaseAPI } from "../common/FirestoreAPI";
 
 import "./Inventory.css"
@@ -81,7 +81,7 @@ const Inventory = ({userObj}) => {
     }
 
     return (
-        <>
+        <Fragment>
             <div className="inventory-btn">
                 <box-icon name='briefcase-alt-2' onClick={onOpenInventory} />
             </div>
@@ -94,15 +94,16 @@ const Inventory = ({userObj}) => {
                     )}   
                     <div className="item-modal hidden">
                         <div className="item-information">
-                            <h4 className="item-name"/>
-                            <h4 className="item-grade"/>
+                            <h4 className="item-name"> </h4>
+                            <h4 className="item-grade"> </h4>
                             <div className="item-statust"/>
                         </div>
                         {/* 버튼을 어떤식으로할지 고민 더 하기 */}
                         <button onClick={onCloseItemInformation}>close</button>
                     </div>
-                </div>}
-        </>
+                </div>
+            }
+        </Fragment>
     )
 }
 
