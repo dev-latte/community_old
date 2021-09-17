@@ -13,9 +13,11 @@ const Status = ({ userObj }) => {
     }
     
     return (
-        <div className="status-interface">
-            <StatusPoint userObj={userObj}/>
-            <button onClick={onClickUserInfo}>Close</button>
+        <div className="main">
+            <div className="status-interface">
+                <StatusPoint userObj={userObj}/>
+                <button onClick={onClickUserInfo}>Close</button>
+            </div>
         </div>
     )
 }

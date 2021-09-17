@@ -5,28 +5,22 @@ ul, ol, li { list-style: none; }
 a { text-decoration: none; }
 
 #root{
-    height: 100vh;
+    position: relative;
+    min-height: 100vh;
     width: 100%;
-    display: flex;
-    justify-content: center;
+    overflow: hidden;
 }
 
 /* 1920px x 1080px */
 .container {
-    /* width: 100vw; */
-    width: 1680px;
-    height: 1050px;
-    border: 1px solid black;
-    border-radius: 30px;
+    width: 100vw;
+    height: 100vh;
     display: grid;
     grid-template-columns: 240px 1fr;
     grid-template-rows: 70px auto;
-    margin-top: 50px;
-    overflow: hidden;
 }
 
 /* main page default setting */
 .main {
-    border: 1px solid black;
     grid-area: 2 / 2 / 3 / 3;
 }

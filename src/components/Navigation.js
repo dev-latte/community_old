@@ -4,26 +4,65 @@ import Logo from "./Logo";
 import Logout from "./Logout";
 import "./Navigation.css";
 import 'boxicons';
+import UtilProfile from "./Profile";
+import Profile from "./Profile";
 
-const Navigation = () => {
+const Navigation = ({userObj}) => {
     return (
         <nav className="main-nav">
-            {/* <box-icon name='menu' id="btn"/> */}
             <Logo/>
             <ul className="menu">
                 <li>
-                    <box-icon name='search'/>
+                    <box-icon name='search' id="search"/>
                     <input type="text" placeholder="Search..." />
                 </li>
-                <Link to="/"><li><box-icon name='home'/>Home</li></Link>
-                <Link to="/about"><li><box-icon name='grid-alt'/>About</li></Link>
-                <Link to="/member"><li><box-icon name='id-card'/>Member</li></Link>
-                <Link to="/shop"><li><box-icon name='store-alt'/>Shop</li></Link>
-                <Link to="/randomItem"><li><box-icon name='memory-card'/>Ramdom Item!</li></Link>
-                <Link to="/room"><li><box-icon type='solid' name='cuboid'/>Room</li></Link>
-                <Link to="/admin"><li><box-icon name='cog'/>Setting</li></Link>
+                <li>
+                    <Link to="/">
+                        <box-icon name='home'/>
+                        <span>Home</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/about">
+                        <box-icon name='grid-alt'/>
+                        <span>About</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/member">
+                        <box-icon name='id-card'/>
+                        <span>Member</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/shop">
+                        <box-icon name='store-alt'/>
+                        <span>Shop</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/randomItem">
+                        <box-icon name='memory-card'/>
+                        <span>Ramdom Item</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/room">
+                        <box-icon type='solid' name='cube-alt'/>
+                        <span>Room</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/admin">
+                        <box-icon name='cog'/>
+                        <span>Setting</span>
+                    </Link>
+                </li>
             </ul>
-            <Logout/>
+            <div className="profile">
+                <Profile userObj={userObj}/>
+                <Logout userObj={userObj}/>
+            </div>
         </nav>
     )
 

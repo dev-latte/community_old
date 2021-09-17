@@ -1,6 +1,7 @@
 import React from "react";
+import "./Profile.css";
 
-const UtilProfile = ({userObj}) => {
+const Profile = ({userObj}) => {
     const onClickUserInfo = (e) => {
         const test = document.querySelector(".status-interface");
         if(!test.classList.contains("on")) {
@@ -12,12 +13,12 @@ const UtilProfile = ({userObj}) => {
 
     return (
         <>
-        <div className="util-profile" onClick={onClickUserInfo}>
+        <div className="profile-details" onClick={onClickUserInfo}>
+            <img src={userObj.photoUrl} alt="Profile" />
             <span>{userObj.displayName}</span>
-            <img src={userObj.photoUrl} className="util-image" alt="Profile" />
         </div>
         </>
     )
 }
 
-export default UtilProfile;
+export default Profile;

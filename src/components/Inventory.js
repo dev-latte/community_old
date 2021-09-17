@@ -1,4 +1,4 @@
-import React, { createElement, useState } from "react";
+import React, { useState } from "react";
 import { firebaseAPI } from "../common/FirestoreAPI";
 
 import "./Inventory.css"
@@ -82,7 +82,9 @@ const Inventory = ({userObj}) => {
 
     return (
         <>
-            <button onClick={onOpenInventory} className="inventory-btn">Inventory Open</button>
+            <div className="inventory-btn">
+                <box-icon name='briefcase-alt-2' onClick={onOpenInventory} />
+            </div>
             {userInventory &&
                 <div className="inventory">
                     { userInventory.memoryCardId.map((memoryCard, index) => 

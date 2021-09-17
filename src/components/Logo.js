@@ -4,7 +4,14 @@ import "./Logo.css";
 const Logo = () => {
     return (
         <>
-            <h1>Title</h1>
+        <div className="logo_content">
+            <div className="logo">
+                <box-icon name='game'/>
+                <div className="logo_name">Title</div>
+            </div>
+            <box-icon name='menu' id="nav_btn"/>
+        </div>
+
         </>
     )
 }

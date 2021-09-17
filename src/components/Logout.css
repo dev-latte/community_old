@@ -1,0 +1,12 @@
+.logout{
+    fill: #fff;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.logout #log-out{
+    width: 30px;
+    height: 30px;
+}

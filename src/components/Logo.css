@@ -1,8 +1,32 @@
-h1 {
+.logo_content .logo {
+    color: #fff;
+    display: flex;
     height: 50px;
     width: 100%;
-    /* color: #fff; */
-    display: flex;
     align-items: center;
-    justify-content: center;
+}
+
+.logo_content .logo box-icon {
+    fill: white;
+    width: 28px;
+    height: 28px;
+    margin-right: 5px;
+}
+
+.logo_content .logo .logo_name {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.logo_content #nav_btn {
+    fill: white;
+    position: absolute;
+    left: 90%;
+    top: 6px;
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+    text-align: center;
+    line-height: 50px;
+    transform: translateX(-60%);
 }

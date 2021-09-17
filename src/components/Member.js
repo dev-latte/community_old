@@ -16,9 +16,13 @@ const Member = () => {
             <button onClick={onSelectCharacter} className="button">member Page</button>
             <div className="character">
                 <div className="character-equip">
-                    <div className="weapon"></div>
-                    <div className="armor"></div>
-                    <div className="accessary"></div>
+                    <div className="weapon">
+                    </div>
+                    <div className="armor">
+                    </div>
+                    <div className="accessary">
+                        
+                    </div>
                 </div>
                 <img src="https://firebasestorage.googleapis.com/v0/b/community-62908.appspot.com/o/member%2F1.png?alt=media&token=ee975d99-fe0c-4b77-b3be-40d0579d5331" alt="" />
                 {/* <img src="https://firebasestorage.googleapis.com/v0/b/community-62908.appspot.com/o/member%2F7.png?alt=media&token=97651efe-afbe-4550-9b08-9ac163d9f2b2" alt="" /> */}
