@@ -1,27 +1,35 @@
 import React, { useState } from "react";
+import { createData } from "../common/FirestoreAPI";
 import { uploadImage } from "../common/StorageAPI";
 
-const UploadMember = () => {
-    const [imageFile, setImageFile] = useState("");
+const UploadMember = ({userObj}) => {
+    const [headFile, setHeadFile] = useState("");
+    const [bodyFile, setBodyFile] = useState("");
 
     // 데이터 업데이트
     const onSubmit = async (e) => {
         // validation check 필수
         e.preventDefault();
-        // upload image
-        uploadImage(imageFile);
+        const {target : { elements } } = e;
+        const list = Array.from(elements).filter((el) => el.className !== "");
+        
+        uploadImage(headFile, "member");
+        uploadImage(bodyFile, "member");
+        
         try {
-            //여기서 e.target.querySelector() 나중에 수정하기
-            // 유저의 프로필을 어떻게 저장할지 고민하기
-            // const data = {
-            //     photoUrl: imageFile,
-            //     id: e.target.querySelector(".weapon-id").value,
-            // }
+            let data = {
+                head: headFile,
+                body: bodyFile,
+                uid: userObj.uid
+            }
+            list.filter(el => el.className !== 'body' && el.className !== 'head').forEach(tag => { data[tag.className] = tag.value; });
+            
             // update data
-            // createData(process.env.REACT_APP_DB_MEMORY_CARDS, data);
-
+            createData(userObj.uid, process.env.REACT_APP_DB_MEMBER_LIST, data);
+            
             onClearInputForm(e);
-            setImageFile("");
+            setHeadFile("");
+            setBodyFile("");
         }catch(error){
             console.log(error);
         }
@@ -29,21 +37,24 @@ const UploadMember = () => {
 
     // 이미지 선택관련
     const onSelectImage = (e) => {
-        const { target: {files} } = e;
+        const { target: {files, className} } = e;
         const file = files[0];
         if(file !== undefined){
             const reader = new FileReader();
             reader.onload = (finishedEvent) => {
                 const {currentTarget: { result } } = finishedEvent;
-                setImageFile(result);
+                (className === "head") ? setHeadFile(result) : setBodyFile(result);
             };
             reader.readAsDataURL(file);    
         }
     }
 
     const onClearInputForm = (e) => {
-        e.target.querySelectorAll("input[type=text]").forEach(input => {
+        e.target.querySelectorAll("input").forEach(input => {
             input.value="";
+        });
+        e.target.querySelectorAll("textarea").forEach(textarea => {
+            textarea.value="";
         });
     }
 

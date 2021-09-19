@@ -10,7 +10,7 @@ const UploadMemoryCard = () => {
         // validation check 필수
         e.preventDefault();
         // upload image
-        uploadImage(imageFile);
+        uploadImage(imageFile, "memoryCard");
         try {
             //여기서 e.target.querySelector() 나중에 수정하기
             const data = {

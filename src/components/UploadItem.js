@@ -9,7 +9,7 @@ const UpdateItem = () => {
     const onSubmit = async (e) => {
         // validation check 필수
         e.preventDefault();
-        uploadImage(imageFile);
+        uploadImage(imageFile, "item");
         try {
 
             //여기서 e.target.querySelector() 나중에 수정하기

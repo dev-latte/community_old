@@ -27,9 +27,9 @@ export const createData = async (uid, dbCollection, data) => {
     });
 }
 
-export const createDataWithoutUid = async (dbCollection, data) => {
+export const createDataWithoutUid = async (uid, dbCollection, data) => {
     console.log(`Calling status API from ${dbCollection}`);
-    await dbService.collection(dbCollection).add(data)
+    await dbService.collection(dbCollection).doc(uid).set(data)
     .catch(error => {
         console.error("Error adding document: ", error);
     });

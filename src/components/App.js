@@ -14,9 +14,9 @@ const App = () => {
       if(user) {
         getData(user.providerData[0].uid, process.env.REACT_APP_DB_TWITTER_INFO).then(data => {
           setUserObj({
-            displayName: user.displayName,
+            displayName: data.name,
             uid: user.uid,
-            photoUrl: user.photoURL,
+            photoUrl: data.profile_image_url,
             twitterId: data.screen_name,
             updateProfile: (args) => user.updateProfile(args)
           });

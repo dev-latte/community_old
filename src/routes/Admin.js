@@ -9,7 +9,7 @@ const Admin = ({userObj}) => {
         <div className="main">
             <UploadMemoryCard userObj={userObj}/>
             <UploadItem userObj={userObj}/>
-            <UploadMember/>
+            <UploadMember userObj={userObj}/>
         </div>
     )
 }

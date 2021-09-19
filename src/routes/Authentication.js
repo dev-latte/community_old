@@ -5,13 +5,13 @@ import { authService, firebaseInstance } from "../fbInstance";
 const Authentication = () => {
     const [error, setError] = useState("");
 
-    const onSocialLoginClick = async (e) => {
+    const onSocialLoginClick = async () => {
         const provider = new firebaseInstance.auth.TwitterAuthProvider();
         try{
             const result = await authService.signInWithPopup(provider).then(data => {
-                return data.additionalUserInfo.profile;
+                return data;
             });
-            createDataWithoutUid(process.env.REACT_APP_DB_TWITTER_INFO, result);
+            createDataWithoutUid(result.user.uid, process.env.REACT_APP_DB_TWITTER_INFO, result.additionalUserInfo.profile);
         }catch(error){
             setError(error.message);
         }
