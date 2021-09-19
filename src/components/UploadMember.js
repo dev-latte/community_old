@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createData } from "../common/FirestoreAPI";
+import { createDataWithoutUid } from "../common/FirestoreAPI";
 import { uploadImage } from "../common/StorageAPI";
 
 const UploadMember = ({userObj}) => {
@@ -25,7 +25,7 @@ const UploadMember = ({userObj}) => {
             list.filter(el => el.className !== 'body' && el.className !== 'head').forEach(tag => { data[tag.className] = tag.value; });
             
             // update data
-            createData(userObj.uid, process.env.REACT_APP_DB_MEMBER_LIST, data);
+            createDataWithoutUid(process.env.REACT_APP_DB_MEMBER_LIST, data);
             
             onClearInputForm(e);
             setHeadFile("");
@@ -50,7 +50,10 @@ const UploadMember = ({userObj}) => {
     }
 
     const onClearInputForm = (e) => {
-        e.target.querySelectorAll("input").forEach(input => {
+        e.target.querySelectorAll("input[type=text]").forEach(input => {
+            input.value="";
+        });
+        e.target.querySelectorAll("input[type=file]").forEach(input => {
             input.value="";
         });
         e.target.querySelectorAll("textarea").forEach(textarea => {

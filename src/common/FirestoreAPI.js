@@ -27,9 +27,9 @@ export const createData = async (uid, dbCollection, data) => {
     });
 }
 
-export const createDataWithoutUid = async (uid, dbCollection, data) => {
+export const createDataWithoutUid = async (dbCollection, data) => {
     console.log(`Calling status API from ${dbCollection}`);
-    await dbService.collection(dbCollection).doc(uid).set(data)
+    await dbService.collection(dbCollection).add(data)
     .catch(error => {
         console.error("Error adding document: ", error);
     });
@@ -50,6 +50,18 @@ export const getData = async (uid, dbCollection) => {
             console.log("Error getting documents: ", error);
         });
 }
+
+export const getAllData = async (dbCollection) => {
+    console.log(`Calling status API from ${dbCollection}`);
+    return await dbService.collection(dbCollection).get();
+}
+
+export const getMemberData = async (dbCollection, name) => {
+    return await dbService.collection(dbCollection)
+        .where("name", "==", name)
+        .get();
+}
+
 
 
 // update userInventoryData for memoryCardId

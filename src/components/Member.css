@@ -1,5 +1,23 @@
-.button.on{
-    display: none;   
+.member-list.on{
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr);
+    padding: 10vh;
+}
+
+.member-list{
+    display: none;
+}
+
+.member-list .member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.member-list img {
+    width: 150px;
+    height: 200px;
+    cursor: pointer;
 }
 
 .character { 
