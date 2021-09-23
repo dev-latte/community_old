@@ -9,15 +9,11 @@ a { text-decoration: none; }
     height: 100vh;
     display: grid;
     grid-template-columns: 240px 1fr;
-    /* grid-template-rows: 70px auto; */
-}
-
-.main-section {
-    grid-area: 2 / 2 / 3 / 3;
+    grid-template-rows: 70px auto;
 }
 
 /* main page default setting */
 .main {
-
+    grid-area: 2 / 2 / 3 / 3;
 }
 
