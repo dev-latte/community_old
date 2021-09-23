@@ -4,6 +4,11 @@
     height: 30px;
     margin-right: 10px;
     cursor: pointer;
+    display: none;
+}
+
+.main-nav.open .logout{
+    display: block;
 }
 
 .logout #log-out{

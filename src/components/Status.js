@@ -13,12 +13,12 @@ const Status = ({ userObj }) => {
     }
     
     return (
-        <div className="main">
+        // <div className="main">
             <div className="status-interface">
                 <StatusPoint userObj={userObj}/>
                 <button onClick={onClickUserInfo}>Close</button>
             </div>
-        </div>
+        // </div>
     )
 }
 

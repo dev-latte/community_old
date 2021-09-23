@@ -4,6 +4,14 @@
     height: 50px;
     width: 100%;
     align-items: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.main-nav.open .logo_content .logo {
+    opacity: 1;
+    pointer-events: none;
+
 }
 
 .logo_content .logo box-icon {
@@ -21,12 +29,18 @@
 .logo_content #nav_btn {
     fill: white;
     position: absolute;
-    left: 90%;
     top: 6px;
+    left: 45%;
     width: 30px;
     height: 30px;
     margin: 10px;
     text-align: center;
     line-height: 50px;
     transform: translateX(-60%);
+    cursor: pointer;
+}
+
+.main-nav.open #nav_btn {
+    left: 90%;
+
 }

@@ -13,11 +13,19 @@
 }
 
 .profile-details .details {
-    display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 10px;
+    display: none;
+    pointer-events: none;
+    white-space: nowrap;
 }
+
+.main-nav.open .profile-details .details {
+    display: flex;
+    pointer-events: auto;
+}
+
 
 .profile-details .name{
     font-size: 15px;
