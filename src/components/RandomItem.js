@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { getMemoryCardInfo } from "../common/FirestoreAPI";
+import { getMemoryCardInfoForRandom } from "../common/FirestoreAPI";
 
 const RandomItem = ({userObj}) => {
     const [memoryCard, setMemoryCard] = useState(null);
     const onClickEvent = (e) => {
         const grade = isGradeCheck(Math.random() * 100);
-        getMemoryCardInfo(userObj.uid, process.env.REACT_APP_DB_MEMORY_CARDS, grade).then(data => {
+        getMemoryCardInfoForRandom(userObj.uid, process.env.REACT_APP_DB_MEMORY_CARDS, grade).then(data => {
             if(data !== undefined || data) {
                 setMemoryCard(data);
             }

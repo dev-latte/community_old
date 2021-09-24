@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createDataWithoutUid } from "../common/FirestoreAPI";
+import { createData } from "../common/FirestoreAPI";
 import { authService, firebaseInstance } from "../fbInstance";
 
 const Authentication = () => {
@@ -11,7 +11,7 @@ const Authentication = () => {
             const result = await authService.signInWithPopup(provider).then(data => {
                 return data;
             });
-            createDataWithoutUid(result.user.uid, process.env.REACT_APP_DB_TWITTER_INFO, result.additionalUserInfo.profile);
+            createData(result.user.uid, process.env.REACT_APP_DB_TWITTER_INFO, result.additionalUserInfo.profile);
         }catch(error){
             setError(error.message);
         }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Home = ({ userObj }) => {
+const Home = () => {
     return (
         <div className="main">home</div>
     )

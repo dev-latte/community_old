@@ -75,7 +75,12 @@ export const updateData = async (uid, dbCollection, data) => {
     });
 }
 
-export const getMemoryCardInfo = async (uid, dbCollection, grade) => {
+export const getUserItemInfo = async (uid, dbCollection) => {
+    console.log(`Item Information! ${dbCollection}`);
+    return await dbService.collection(dbCollection).doc(uid).get();
+}
+
+export const getMemoryCardInfoForRandom = async (uid, dbCollection, grade) => {
     console.log(`Item Information! ${dbCollection}`);
     const result = await dbService.collection(dbCollection)
                     .where("grade", "==", grade)
@@ -86,8 +91,6 @@ export const getMemoryCardInfo = async (uid, dbCollection, grade) => {
                         const data = doc.docs[random].data();
                         updateData(uid, process.env.REACT_APP_DB_USER_INVENTORY, data);
                         return data;
-                    }).catch((error) => {
-                        console.log("Error getting documents: ", error);
-                    });
+                    })
     return result;
 }

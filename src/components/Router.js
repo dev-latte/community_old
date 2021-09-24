@@ -17,12 +17,12 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
         <BrowserRouter>
             { isLoggedIn && <Fragment>
                             <Navigation userObj={userObj}/>
-                            <UtilMenu userObj={userObj}/>
                             <Status userObj={userObj} />
                             </Fragment>
             }
             { isLoggedIn ? (
-                <Fragment>
+                <section className="main-page">
+                    <UtilMenu userObj={userObj}/>
                     <Switch>
                     <Route exact path="/">
                         <Home userObj={userObj}/>
@@ -31,7 +31,7 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                         <About/>
                     </Route>
                     <Route exact path="/member">
-                        <Member/>
+                        <Member userObj={userObj}/>
                     </Route>
                     <Route exact path="/shop">
                         <Shop/>
@@ -46,7 +46,7 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                         <Admin userObj={userObj}/>
                     </Route>
                     </Switch>
-                </Fragment>
+                </section>
             ) : (
                 <Fragment>
                     <Switch>
