@@ -1,5 +1,5 @@
 // 1
-export const onLoadScreen = (userInformation) => {
+export const onLoadScreen = (information) => {
     const main = document.querySelector(".main-page");
     const screen = document.createElement("div");
     screen.setAttribute("class", "mask");
@@ -12,7 +12,7 @@ export const onLoadScreen = (userInformation) => {
     const inventory = document.createElement("div");
     inventory.setAttribute("class", "inventory");
 
-    createInventory(userInformation).forEach(div => {
+    createInventory(information).forEach(div => {
         inventory.appendChild(div);
     });
 
@@ -21,8 +21,8 @@ export const onLoadScreen = (userInformation) => {
 }
 
 // 2
-const createInventory = (userInformation) => {
-    return userInformation.map((item, index) => {
+const createInventory = (information) => {
+    return information.map((item, index) => {
         const div = document.createElement("div");
         div.setAttribute("key", index);
         div.setAttribute("class", "item");
