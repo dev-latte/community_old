@@ -3,6 +3,7 @@ import { firebaseAPI } from "../common/FirestoreAPI";
 import { dbService } from "../fbInstance";
 
 const StatusPoint = ({ userObj }) => {
+    // To Do : init data 따로 모아두기
     const initStatus = {
         level: 1,
         exp: 0,
@@ -17,13 +18,15 @@ const StatusPoint = ({ userObj }) => {
         uid: userObj.uid
     };
     const [status, setStatus] = useState(initStatus);
+    const [equipment, setEquipment] = useState({});
 
-    // 여기서 구독관련된 문제 처리하기
     useEffect(() => {
         let isSubscribed = true;
         if(isSubscribed){
+            // init status
             firebaseAPI({ userObj }, process.env.REACT_APP_DB_STATUS, status);
             onRealtimeStatus();
+            initEquipment();
         }
         return () => isSubscribed = false;
     }, []);
@@ -48,7 +51,23 @@ const StatusPoint = ({ userObj }) => {
         }catch(error){
             console.log(error);
         }
+    }
 
+    // init user eqiupment
+    const initEquipment = async () => {
+        await firebaseAPI({ userObj }, process.env.REACT_APP_DB_USER_EQUIPMENT, {
+            uid: userObj.uid,
+            weapon: {},
+            armor: {},
+            jewelry: {}
+            }).then(data => {
+                setEquipment(data);
+                // 아이템들의 능력치를 합해서 하나로 만들어두기
+                // 장착정보 스냅샷을 여기에 둬야하는건 아닌지?
+                console.log(data);
+            }).catch(error => {
+                console.log(`init Equipment Error ${error}`);
+            });
     }
 
     const onClickPlus = async (e) => {

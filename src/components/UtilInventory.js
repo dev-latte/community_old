@@ -28,7 +28,7 @@ const UtilInventory = ({userObj}) => {
         if(!isOn){
             await getUserInformation();
         }
-        onLoadScreen(userInventory);
+        onLoadScreen(userObj.uid, userInventory);
         setIsOn(!isOn);
     }
 

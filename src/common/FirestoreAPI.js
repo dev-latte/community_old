@@ -1,4 +1,6 @@
 import { dbService, firebaseInstance } from "../fbInstance";
+// Todo : DB 중복 제거하기
+
 
 // init data on firebase
 export const firebaseAPI = async ({userObj}, dbCollection, defaultData) => {
@@ -35,7 +37,7 @@ export const createDataWithoutUid = async (dbCollection, data) => {
     });
 }
 
-// get data
+// get twitter data
 export const getData = async (uid, dbCollection) => {
     console.log(`Calling status API from ${dbCollection}`);
     return await dbService.collection(dbCollection)
@@ -80,6 +82,17 @@ export const getUserItemInfo = async (uid, dbCollection) => {
     return await dbService.collection(dbCollection).doc(uid).get();
 }
 
+// update equipment information
+export const updateEquipmentData = async (uid, dbCollection, data) => {
+    const kinds = data.id.split("-")[2];
+    const updateData = (kinds === "W") ? { weapon: data } : (kinds === "A") 
+                    ? { armor: data } : { accessory: data };
+    dbService.collection(dbCollection).doc(uid).update(updateData).then(() => {
+        console.log("Equipment Data successfully updated!");
+    });
+}
+
+// random item
 export const getMemoryCardInfoForRandom = async (uid, dbCollection, grade) => {
     console.log(`Item Information! ${dbCollection}`);
     const result = await dbService.collection(dbCollection)
@@ -94,3 +107,4 @@ export const getMemoryCardInfoForRandom = async (uid, dbCollection, grade) => {
                     })
     return result;
 }
+

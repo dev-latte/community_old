@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createData } from "../common/FirestoreAPI";
+import { createDataWithoutUid } from "../common/FirestoreAPI";
 import { uploadImage } from "../common/StorageAPI";
 
 const UpdateItem = () => {
@@ -22,7 +22,7 @@ const UpdateItem = () => {
                 subscription: e.target.querySelector(".item-subscription").value
             }
 
-            createData(process.env.REACT_APP_DB_ITEMS, data);
+            createDataWithoutUid(process.env.REACT_APP_DB_ITEMS, data);
 
             // reset page
             onClearInputForm(e);

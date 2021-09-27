@@ -47,8 +47,14 @@
     height: 70px;
     border: 1px solid black;
     background-color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
 }
 
+.character .character-equip div img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
 
 .character img {
     height: 900px;

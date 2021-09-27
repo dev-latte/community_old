@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createData } from "../common/FirestoreAPI";
+import { createDataWithoutUid } from "../common/FirestoreAPI";
 import { uploadImage } from "../common/StorageAPI";
 
 const UploadMemoryCard = () => {
@@ -27,7 +27,7 @@ const UploadMemoryCard = () => {
                 luk: Number(e.target.querySelector(".weapon-luk").value)
             }
             // update data
-            createData(process.env.REACT_APP_DB_MEMORY_CARDS, data);
+            createDataWithoutUid(process.env.REACT_APP_DB_MEMORY_CARDS, data);
 
             onClearInputForm(e);
             setImageFile("");
