@@ -4,6 +4,7 @@
     position: fixed;
     right: -20%;
     border: 1px solid violet;
+    background: #fff;
     transition: 0.5s;
 }
 
