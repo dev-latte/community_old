@@ -42,7 +42,9 @@
     justify-content: space-between;
 }
 
-.character .character-equip div {
+.character .character-equip .weapon,
+.character .character-equip .armor,
+.character .character-equip .jewelry {
     width: 70px;
     height: 70px;
     border: 1px solid black;
@@ -58,4 +60,35 @@
 
 .character img {
     height: 900px;
+}
+
+.character .character-equip .item-modal {
+    width: 10em;
+    height: 15em;
+    border: 1px solid black;
+    flex-direction: column;
+    position: fixed;
+    background-color: #fff;
+}
+
+.character .character-equip .item-modal .item-information {
+    flex-direction: inherit;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+}
+
+
+/* x버튼 스타일 > 수정예정 */
+.character .character-equip .item-modal .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    color: #fff;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
 }

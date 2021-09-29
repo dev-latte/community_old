@@ -87,9 +87,16 @@ export const updateEquipmentData = async (uid, dbCollection, data) => {
     const kinds = data.id.split("-")[2];
     const updateData = (kinds === "W") ? { weapon: data } : (kinds === "A") 
                     ? { armor: data } : { accessory: data };
-    dbService.collection(dbCollection).doc(uid).update(updateData).then(() => {
+    await dbService.collection(dbCollection).doc(uid).update(updateData).then(() => {
         console.log("Equipment Data successfully updated!");
     });
+}
+
+// update empty Equip infomation
+export const disarmEquipmentData = async (uid, dbCollection, key) => {
+    const data = {};
+    data[key] = {}
+    await dbService.collection(dbCollection).doc(uid).update(data).then();
 }
 
 // random item

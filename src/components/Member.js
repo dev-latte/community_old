@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { firebaseAPI, getAllData, getUserItemInfo } from "../common/FirestoreAPI";
+import { disarmEquipmentData, getAllData, getUserItemInfo, updateEquipmentData } from "../common/FirestoreAPI";
 import { onLoadScreen } from "../common/Inventory";
 import { dbService } from "../fbInstance";
 import "./Member.css"
@@ -7,13 +7,12 @@ import "./Member.css"
 const Member = ({userObj}) => {
     const [memberList, setMemberList] = useState(null);
     const [memberInfo, setMemberInfo] = useState(null);
+    const [equipmentInfo, setEquipmentInfo] = useState({});
 
     useEffect(() => {
         onGetMemberData();
         onCurrentEquipment();
     }, []);
-
-
 
     const onGetMemberData = async () => {
         await getAllData(process.env.REACT_APP_DB_MEMBER_LIST).then((doc) => {
@@ -43,7 +42,8 @@ const Member = ({userObj}) => {
     }
 
     const selectEquipment = async (e) => {
-        if(e.target.className !== ""){
+        const target = e.target.className;
+        if(target === "weapon" || target === "armor" || target === "jewelry"){
             await getUserItemInfo(userObj.uid, process.env.REACT_APP_DB_USER_INVENTORY).then(doc => {
                 if(doc.exists) {
                     onLoadScreen(userObj.uid, doc.data().memoryCardId.filter(card => card.id.split("-")[2] === e.target.classList[0][0].toUpperCase()));
@@ -51,9 +51,62 @@ const Member = ({userObj}) => {
             }).catch((error) => {
                 console.log("Error getting documents: ", error);
             });
-        } else {
-            console.log("equip!")
-            // 아이템 정보 띄우기 여기에 창 띄우는거해야함
+        } else if(target.split("-").length === 4){
+            // 아이템 정보창 셋팅함
+            const itemInfo = equipmentInfo[target.split("-")[2] === "W" ? "weapon" : target.split("-")[2] === "A" ? "armor" : "jewelry"];
+            let modal = e.target.parentNode.parentNode.querySelectorAll(".item-modal");
+            if(modal.length !== 0){
+                modal = e.target.parentNode.parentNode.querySelector(".item-modal");
+                modal.remove();
+                console.log("modal exist");
+            }
+            modal = document.createElement("div");
+            modal.setAttribute("class", "item-modal");
+            modal.style.left = `${e.clientX}px`;
+            modal.style.top = `${e.clientY}px`;
+
+            const info = document.createElement("div");
+            info.setAttribute("class", "item-information");
+    
+            const name = document.createElement("h4");
+            name.setAttribute("class", "item-name");
+            name.innerText = itemInfo.name;
+    
+            const grade = document.createElement("h4");
+            grade.setAttribute("class", "item-grade");
+            grade.innerText = itemInfo.grade
+
+            const status = document.createElement("span");
+            status.setAttribute("class", "item-status");
+            status.innerText = `ATK : ${itemInfo.atk}
+                                INT : ${itemInfo.int}
+                                HP : ${itemInfo.hp}
+                                DEF : ${itemInfo.def}
+                                DEX : ${itemInfo.dex}
+                                AGI : ${itemInfo.agi}
+                                LUK : ${itemInfo.luk}`;
+    
+            const closeBtn = document.createElement("span");
+            closeBtn.setAttribute("class", "close");
+            closeBtn.innerText = "X";
+    
+            const useBtn = document.createElement("button");
+            useBtn.setAttribute("class", "disarm");
+            useBtn.innerText = "해제";
+
+            info.appendChild(name);
+            info.appendChild(grade);
+            info.appendChild(status);
+            info.appendChild(closeBtn);
+            info.appendChild(useBtn);
+            modal.appendChild(info);
+            e.target.parentNode.appendChild(modal);
+        } else if(target === "close") {
+            e.target.parentNode.parentNode.remove();
+        } else if(target === "disarm") {
+            // 해제버튼 이벤트
+            const key = e.target.parentNode.parentNode.parentNode.className;
+            disarmEquipmentData(userObj.uid, process.env.REACT_APP_DB_USER_EQUIPMENT, key);
         }
     }
 
@@ -62,13 +115,13 @@ const Member = ({userObj}) => {
         await dbService.collection(process.env.REACT_APP_DB_USER_EQUIPMENT).doc(userObj.uid).onSnapshot((snap) => {
             if(snap.exists){
                 const equipment = snap.data();
+                setEquipmentInfo(equipment);
                 character.childNodes.item(1).childNodes.forEach(el => {
                     const kinds = el.className;
-                    if(Object.keys(equipment[kinds]).length !== 0) {
-                        const equipmentItem = document.querySelector(`.${kinds}`);
-                        equipmentItem.innerHTML = `<img src="${equipment[kinds].photoUrl}">`;
-                        // 착용중인 장비 이미지 클릭 시 
-                    }
+                    const equipmentItem = document.querySelector(`.${kinds}`);
+                    equipmentItem.innerHTML = (Object.keys(equipment[kinds]).length !== 0) 
+                                            ? `<img src="${equipment[kinds].photoUrl}" class="${equipment[kinds].id}"/>`
+                                            : "";
                 });
             };
         });
