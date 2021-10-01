@@ -37,6 +37,7 @@ const StatusPoint = ({ userObj }) => {
             onRealtimeStatus();
             initEquipment();
             onCurrentEquipment();
+            console.log(equipment);
         }
         return () => isSubscribed = false;
     }, []);
@@ -163,22 +164,22 @@ const StatusPoint = ({ userObj }) => {
             <div>공격력: {status.atk * 10}</div>
             <div>방어력: {status.def * 5}</div>
             <ul>
-                <li>ATK: { status.atk } {equipment.atk !== 0 && <span>( +{ equipment.atk })</span> }
+                <li>ATK: { status.atk } {equipment.atk > 0 && <span>( +{ equipment.atk })</span> }
                     {status.point !== 0 && <button onClick={onClickPlus} value="atk">+</button>}
                 </li>
-                <li>INT: {status.int} {equipment.int !== 0 && <span>( +{ equipment.int })</span> }
+                <li>INT: {status.int} {equipment.int > 0 && <span>( +{ equipment.int })</span> }
                     {status.point !== 0 && <button onClick={onClickPlus} value="int">+</button>}
                 </li>
-                <li>DEF: {status.def} {equipment.def !== 0 && <span>( +{ equipment.def })</span> }
+                <li>DEF: {status.def} {equipment.def > 0 && <span>( +{ equipment.def })</span> }
                     {status.point !== 0 && <button onClick={onClickPlus} value="def">+</button>}
                 </li>
-                <li>DEX: {status.dex} {equipment.dex !== 0 && <span>( +{ equipment.dex })</span> }
+                <li>DEX: {status.dex} {equipment.dex > 0 && <span>( +{ equipment.dex })</span> }
                     {status.point !== 0 && <button onClick={onClickPlus} value="dex">+</button>}
                 </li>
-                <li>AGI: {status.agi} {equipment.agi !== 0 && <span>( +{ equipment.agi })</span> }
+                <li>AGI: {status.agi} {equipment.agi > 0 && <span>( +{ equipment.agi })</span> }
                     {status.point !== 0 &&<button onClick={onClickPlus} value="agi">+</button>}
                 </li>
-                <li>LUK: {status.luk} {equipment.luk !== 0 && <span>( +{ equipment.luk })</span> }
+                <li>LUK: {status.luk} {equipment.luk > 0 && <span>( +{ equipment.luk })</span> }
                     {status.point !== 0 && <button onClick={onClickPlus} value="luk">+</button>}
                 </li>
                 <li>잔여 포인트: {status.point}</li>

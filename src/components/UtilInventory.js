@@ -1,11 +1,11 @@
 import React, {useEffect, useState } from "react";
-import { getUserItemInfo } from "../common/FirestoreAPI";
+import { createData, firebaseAPI, getUserItemInfo } from "../common/FirestoreAPI";
 import { onLoadScreen } from "../common/Inventory";
 import "./Inventory.css";
 
 const UtilInventory = ({userObj}) => {
     const [isOn, setIsOn] = useState(false);
-    const [userInventory, setUserInventory] = useState([]);
+    const [userInventory, setUserInventory] = useState({});
 
     useEffect(() => {
         getUserInformation();
@@ -20,6 +20,14 @@ const UtilInventory = ({userObj}) => {
                             ...memoryCard,
                             ...itemId
                 ]);
+            } else {
+                const initInventoryData = {
+                    itemId: [],
+                    memoryCardId: [],
+                    uid: userObj.uid
+                };
+                // 여기부터... 
+                createData(userObj.uid, process.env.REACT_APP_DB_USER_INVENTORY, initInventoryData);
             }
         });
     }

@@ -23,10 +23,7 @@ export const firebaseAPI = async ({userObj}, dbCollection, defaultData) => {
 // add data on firebase
 export const createData = async (uid, dbCollection, data) => {
     console.log(`Calling status API from ${dbCollection}`);
-    await dbService.collection(dbCollection).doc(uid).set(data)
-    .catch(error => {
-        console.error("Error adding document: ", error);
-    });
+    return await dbService.collection(dbCollection).doc(uid).set(data);
 }
 
 export const createDataWithoutUid = async (dbCollection, data) => {
@@ -68,12 +65,16 @@ export const getMemberData = async (dbCollection, name) => {
 
 // update userInventoryData for memoryCardId
 export const updateData = async (uid, dbCollection, data) => {
+    // uid(다큐먼트)가 존재할떄 아닐떄... 로 구별해서 작성하기 > 이럴필요없이 처음에 초기값 셋팅하는건/
     const ref = dbService.collection(dbCollection).doc(uid);
+    console.log(ref);
     ref.update({
         // 중복 요소에 대해서 고민해보기(현재는 중복x)
         memoryCardId: firebaseInstance.firestore.FieldValue.arrayUnion(data)
     }).then(() => {
         console.log("Document successfully updated!");
+    }).catch(error => {
+        console.log("document", error);
     });
 }
 

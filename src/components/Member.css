@@ -31,6 +31,7 @@
 
 .character.on {
     display: flex;
+    flex-direction: column;
 }
 
 .character .character-equip {
@@ -40,6 +41,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.character .character-equip.hidden {
+    display: none;
 }
 
 .character .character-equip .weapon,
@@ -91,4 +96,22 @@
     vertical-align: middle;
     text-align: center;
     cursor: pointer;
+}
+
+
+/* 스타일 수정 예정 */
+.character .character-concept.hidden {
+    display: none;
+}
+
+.character .character-concept .concept {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+}
+
+.character .character-concept .concept h1{
+    top: 5px;
+    border: 1px solid black;
+    margin-right: 0 auto;
 }

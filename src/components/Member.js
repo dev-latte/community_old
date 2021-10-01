@@ -8,10 +8,15 @@ const Member = ({userObj}) => {
     const [memberList, setMemberList] = useState(null);
     const [memberInfo, setMemberInfo] = useState(null);
     const [equipmentInfo, setEquipmentInfo] = useState({});
+    const [isOwner, setIsOwner] = useState(false);
 
     useEffect(() => {
-        onGetMemberData();
-        onCurrentEquipment();
+        let isSubscribed = true;
+        if(isSubscribed){
+            onGetMemberData();
+            onCurrentEquipment();
+        }
+        return () => isSubscribed = false;
     }, []);
 
     const onGetMemberData = async () => {
@@ -30,19 +35,37 @@ const Member = ({userObj}) => {
         const character = document.querySelector(".character");
 
         const {target : { className }} = e;
-        setMemberInfo(Array.from(memberList).filter(member => className === member.name)[0]);
+        const selectedCharacter = Array.from(memberList).filter(member => className === member.name)[0];
+        setMemberInfo(selectedCharacter);
+
+        if (selectedCharacter.uid === userObj.uid) {
+            setIsOwner(true);
+        } else {
+            setIsOwner(false);
+        }
 
         character.classList.add("on");
         document.querySelector(".member-list").classList.remove("on")
     }
 
-    const onCloseCharaterInfo = () => {
-        document.querySelector(".character").classList.remove("on");
-        document.querySelector(".member-list").classList.add("on");
+    const onCloseCharaterInfo = (e) => {
+        const characterDiv = e.target.parentNode;
+        characterDiv.classList.remove("on");
+        characterDiv.parentNode.childNodes[0].classList.add("on");
+
+        if(characterDiv.childNodes[1].classList.contains("hidden")) { 
+            characterDiv.childNodes[1].classList.remove("hidden"); 
+        }
+
+        if(!characterDiv.childNodes[4].classList.contains("hidden")){
+            characterDiv.childNodes[4].classList.add("hidden");
+        }
     }
 
     const selectEquipment = async (e) => {
+        console.log(e);
         const target = e.target.className;
+        console.log(target)
         if(target === "weapon" || target === "armor" || target === "jewelry"){
             await getUserItemInfo(userObj.uid, process.env.REACT_APP_DB_USER_INVENTORY).then(doc => {
                 if(doc.exists) {
@@ -116,15 +139,62 @@ const Member = ({userObj}) => {
             if(snap.exists){
                 const equipment = snap.data();
                 setEquipmentInfo(equipment);
-                character.childNodes.item(1).childNodes.forEach(el => {
-                    const kinds = el.className;
-                    const equipmentItem = document.querySelector(`.${kinds}`);
-                    equipmentItem.innerHTML = (Object.keys(equipment[kinds]).length !== 0) 
-                                            ? `<img src="${equipment[kinds].photoUrl}" class="${equipment[kinds].id}"/>`
-                                            : "";
-                });
+                if(character.children.item(4) !== null) {
+                    character.childNodes.item(4).childNodes.forEach(el => {
+                        const kinds = el.className;
+                        const equipmentItem = document.querySelector(`.${kinds}`);
+                        equipmentItem.innerHTML = (Object.keys(equipment[kinds]).length !== 0) 
+                                                ? `<img src="${equipment[kinds].photoUrl}" class="${equipment[kinds].id}"/>`
+                                                 : "";
+                    });    
+                }
             };
         });
+    }
+
+    const onCharacterConcept = (e) => {
+        const characterDiv = e.target.parentNode.parentNode;
+        if(characterDiv.childNodes[1].classList.contains("hidden")) {
+            characterDiv.childNodes[1].classList.remove("hidden");
+            characterDiv.childNodes[4].classList.add("hidden");
+        }
+    }
+
+    const onCharacterEquipment = (e) => {
+        const characterDiv = e.target.parentNode.parentNode;
+        if(Array.from(characterDiv.childNodes).filter(el => el.classList.contains("character-equip")).length !== 0) {
+            if(characterDiv.childNodes[4].classList.contains("hidden")) {
+                characterDiv.childNodes[4].classList.remove("hidden");
+            }    
+        }
+        characterDiv.childNodes[1].classList.add("hidden");
+        // create equipment
+        onCreateEquipElement(e, characterDiv);
+    }
+
+    const onCreateEquipElement = (e, characterDiv) => {
+        if(Array.from(characterDiv.childNodes).filter(el => el.classList.contains("character-equip")).length === 0) {
+            const characterEquipDiv = document.createElement("div");
+            characterEquipDiv.setAttribute("class", "character-equip");
+
+            const weapon = document.createElement("div");
+            weapon.setAttribute("class", "weapon");
+            weapon.addEventListener("click", (e) => {selectEquipment(e)});
+    
+            const armor = document.createElement("div");
+            armor.setAttribute("class", "armor");
+            armor.addEventListener("click", (e) => {selectEquipment(e)});
+    
+            const jewelry = document.createElement("div");
+            jewelry.setAttribute("class", "jewelry");
+            jewelry.addEventListener("click", (e) => {selectEquipment(e)});
+
+            characterEquipDiv.appendChild(weapon);
+            characterEquipDiv.appendChild(armor);
+            characterEquipDiv.appendChild(jewelry);
+
+            characterDiv.appendChild(characterEquipDiv);
+        }
     }
 
     return (
@@ -140,13 +210,26 @@ const Member = ({userObj}) => {
                 </div>
             }
             <div className="character">
+                <div className="character-btns">
+                    <button className="concept-btn" onClick={onCharacterConcept}>캐릭터 설정</button>
+                    {isOwner && <button className="equipment-btn" onClick={onCharacterEquipment}>장비창</button>}           
+                </div>
+                {memberInfo && 
+                <div className="character-concept">
+                    <div className="concept">
+                        <h1>{memberInfo.name}</h1>
+                        <h3>{memberInfo.simple}</h3>
+                        <p>{memberInfo.gender}</p>
+                        <p>{memberInfo.age}</p>
+                        <p>{memberInfo.appearance}</p>
+                        <p>{memberInfo.height}</p>
+                        <p>{memberInfo.personality}</p>
+                        <p>{memberInfo.secret}</p>
+                    </div>
+                </div>
+                }  
                 <div className="chracter-body">
                 { memberInfo && <img src={memberInfo.body} alt={memberInfo.name} /> }
-                </div>
-                <div className="character-equip">
-                    <div className="weapon" onClick={selectEquipment}></div>
-                    <div className="armor" onClick={selectEquipment}></div>
-                    <div className="jewelry" onClick={selectEquipment}></div>
                 </div>
                 <button className="close" onClick={onCloseCharaterInfo}>close</button>
             </div>
