@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { disarmEquipmentData, getAllData, getUserItemInfo, updateEquipmentData } from "../common/FirestoreAPI";
+import { disarmEquipmentData, getAllData, getUserItemInfo } from "../common/FirestoreAPI";
 import { onLoadScreen } from "../common/Inventory";
 import { dbService } from "../fbInstance";
 import "./Member.css"
 
 const Member = ({userObj}) => {
+    // 직접적인 DOM조작은 피해야한다.
+    // DOM요소에 엑세스하고 클래스를 추가하는 대신, React 컴포넌트 내부의 상태를 유지하고, 해당 상태를 사용하여 클래스 컴포넌트에 추가해야한다.
+    // 리액트 컴포넌트에 맞게 리팩토링 꼭 하기
     const [memberList, setMemberList] = useState(null);
     const [memberInfo, setMemberInfo] = useState(null);
     const [equipmentInfo, setEquipmentInfo] = useState({});
@@ -63,9 +66,7 @@ const Member = ({userObj}) => {
     }
 
     const selectEquipment = async (e) => {
-        console.log(e);
         const target = e.target.className;
-        console.log(target)
         if(target === "weapon" || target === "armor" || target === "jewelry"){
             await getUserItemInfo(userObj.uid, process.env.REACT_APP_DB_USER_INVENTORY).then(doc => {
                 if(doc.exists) {
@@ -77,6 +78,8 @@ const Member = ({userObj}) => {
         } else if(target.split("-").length === 4){
             // 아이템 정보창 셋팅함
             const itemInfo = equipmentInfo[target.split("-")[2] === "W" ? "weapon" : target.split("-")[2] === "A" ? "armor" : "jewelry"];
+            console.log(equipmentInfo);
+
             let modal = e.target.parentNode.parentNode.querySelectorAll(".item-modal");
             if(modal.length !== 0){
                 modal = e.target.parentNode.parentNode.querySelector(".item-modal");
@@ -138,11 +141,13 @@ const Member = ({userObj}) => {
         await dbService.collection(process.env.REACT_APP_DB_USER_EQUIPMENT).doc(userObj.uid).onSnapshot((snap) => {
             if(snap.exists){
                 const equipment = snap.data();
+                console.log("equip", equipment);
                 setEquipmentInfo(equipment);
                 if(character.children.item(4) !== null) {
                     character.childNodes.item(4).childNodes.forEach(el => {
                         const kinds = el.className;
                         const equipmentItem = document.querySelector(`.${kinds}`);
+                        console.log(equipment[kinds].id);
                         equipmentItem.innerHTML = (Object.keys(equipment[kinds]).length !== 0) 
                                                 ? `<img src="${equipment[kinds].photoUrl}" class="${equipment[kinds].id}"/>`
                                                  : "";
@@ -165,7 +170,7 @@ const Member = ({userObj}) => {
         if(Array.from(characterDiv.childNodes).filter(el => el.classList.contains("character-equip")).length !== 0) {
             if(characterDiv.childNodes[4].classList.contains("hidden")) {
                 characterDiv.childNodes[4].classList.remove("hidden");
-            }    
+            }
         }
         characterDiv.childNodes[1].classList.add("hidden");
         // create equipment
@@ -173,20 +178,40 @@ const Member = ({userObj}) => {
     }
 
     const onCreateEquipElement = (e, characterDiv) => {
+        // TODO 반복된 코드 > 수정 필요
+        console.log(equipmentInfo)
         if(Array.from(characterDiv.childNodes).filter(el => el.classList.contains("character-equip")).length === 0) {
             const characterEquipDiv = document.createElement("div");
             characterEquipDiv.setAttribute("class", "character-equip");
 
             const weapon = document.createElement("div");
             weapon.setAttribute("class", "weapon");
+            if(Object.keys(equipmentInfo.weapon).length !== 0){
+                const img = document.createElement("img");
+                img.setAttribute("src", equipmentInfo.weapon.photoUrl);
+                img.setAttribute("class", equipmentInfo.weapon.id);
+                weapon.appendChild(img);
+            }
             weapon.addEventListener("click", (e) => {selectEquipment(e)});
     
             const armor = document.createElement("div");
             armor.setAttribute("class", "armor");
+            if(Object.keys(equipmentInfo.armor).length !== 0){
+                const img = document.createElement("img");
+                img.setAttribute("src", equipmentInfo.armor.photoUrl);
+                img.setAttribute("class", equipmentInfo.armor.id);
+                armor.appendChild(img);
+            }
             armor.addEventListener("click", (e) => {selectEquipment(e)});
     
             const jewelry = document.createElement("div");
             jewelry.setAttribute("class", "jewelry");
+            if(Object.keys(equipmentInfo.jewelry).length !== 0) {
+                const img = document.createElement("img");
+                img.setAttribute("src", equipmentInfo.jewelry.photoUrl);
+                img.setAttribute("class", equipmentInfo.jewelry.id);
+                jewelry.appendChild(img);
+            }
             jewelry.addEventListener("click", (e) => {selectEquipment(e)});
 
             characterEquipDiv.appendChild(weapon);
@@ -211,20 +236,33 @@ const Member = ({userObj}) => {
             }
             <div className="character">
                 <div className="character-btns">
-                    <button className="concept-btn" onClick={onCharacterConcept}>캐릭터 설정</button>
-                    {isOwner && <button className="equipment-btn" onClick={onCharacterEquipment}>장비창</button>}           
+                    <span className="concept-btn" onClick={onCharacterConcept}>캐릭터 설정</span>
+                    {isOwner && <span className="equipment-btn" onClick={onCharacterEquipment}>장비창</span>}           
                 </div>
                 {memberInfo && 
                 <div className="character-concept">
                     <div className="concept">
-                        <h1>{memberInfo.name}</h1>
-                        <h3>{memberInfo.simple}</h3>
-                        <p>{memberInfo.gender}</p>
-                        <p>{memberInfo.age}</p>
-                        <p>{memberInfo.appearance}</p>
-                        <p>{memberInfo.height}</p>
-                        <p>{memberInfo.personality}</p>
-                        <p>{memberInfo.secret}</p>
+                        <div className="simple">
+                            <h3>"{memberInfo.simple}"</h3>
+                        </div>
+
+                        <div className="appearance">
+                            <h4>{memberInfo.name}</h4>
+                            <p>{memberInfo.gender}</p>
+                            <p>{memberInfo.age}</p>
+                            <p>{memberInfo.height}</p>
+                            <p>{memberInfo.appearance}</p>
+                        </div>
+
+                        <div className="feature">
+                            <p>{memberInfo.personality}</p>
+                            <p>{memberInfo.feature}</p>
+                        </div>
+                        
+                        <div className="secret">
+                            <p>{memberInfo.secret}</p>
+                        </div>
+                        
                     </div>
                 </div>
                 }  

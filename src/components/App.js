@@ -3,7 +3,7 @@ import { authService } from '../fbInstance';
 import AppRouter from './Router';
 import "./App.css";
 import "boxicons";
-import { getData } from '../common/FirestoreAPI';
+import { getTwitterData } from '../common/FirestoreAPI';
 
 const App = () => {
   const [init, setInit] = useState(false);
@@ -12,7 +12,7 @@ const App = () => {
   useEffect(() => {
     authService.onAuthStateChanged(user => {
       if(user) {
-        getData(user.providerData[0].uid, process.env.REACT_APP_DB_TWITTER_INFO).then(data => {
+        getTwitterData(user.providerData[0].uid, process.env.REACT_APP_DB_TWITTER_INFO).then(data => {
           setUserObj({
             displayName: data.name,
             uid: user.uid,

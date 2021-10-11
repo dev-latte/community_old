@@ -1,7 +1,6 @@
 import { dbService, firebaseInstance } from "../fbInstance";
 // Todo : DB 중복 제거하기
 
-
 // init data on firebase
 export const firebaseAPI = async ({userObj}, dbCollection, defaultData) => {
     console.log(`Calling status API from ${dbCollection}`);
@@ -20,12 +19,13 @@ export const firebaseAPI = async ({userObj}, dbCollection, defaultData) => {
         });
 }
 
-// add data on firebase
+// Create data on firebase With UID
 export const createData = async (uid, dbCollection, data) => {
     console.log(`Calling status API from ${dbCollection}`);
     return await dbService.collection(dbCollection).doc(uid).set(data);
 }
 
+// Create data on firebase without UID
 export const createDataWithoutUid = async (dbCollection, data) => {
     console.log(`Calling status API from ${dbCollection}`);
     await dbService.collection(dbCollection).add(data)
@@ -35,7 +35,7 @@ export const createDataWithoutUid = async (dbCollection, data) => {
 }
 
 // get twitter data
-export const getData = async (uid, dbCollection) => {
+export const getTwitterData = async (uid, dbCollection) => {
     console.log(`Calling status API from ${dbCollection}`);
     return await dbService.collection(dbCollection)
         .where("id_str", "==", uid)

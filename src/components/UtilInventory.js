@@ -1,7 +1,8 @@
 import React, {useEffect, useState } from "react";
-import { createData, firebaseAPI, getUserItemInfo } from "../common/FirestoreAPI";
+import { createData, getUserItemInfo } from "../common/FirestoreAPI";
 import { onLoadScreen } from "../common/Inventory";
-import "./Inventory.css";
+// import { onLoadScreen } from "../common/Inventory";
+import "../common/Inventory.css";
 
 const UtilInventory = ({userObj}) => {
     const [isOn, setIsOn] = useState(false);
@@ -26,13 +27,14 @@ const UtilInventory = ({userObj}) => {
                     memoryCardId: [],
                     uid: userObj.uid
                 };
-                // 여기부터... 
                 createData(userObj.uid, process.env.REACT_APP_DB_USER_INVENTORY, initInventoryData);
             }
         });
     }
 
-    const onOpenInventory = async () => {
+    const openInventory = async (e) => {
+        const test = React.createRef();
+        console.log(test);
         if(!isOn){
             await getUserInformation();
         }
@@ -43,7 +45,7 @@ const UtilInventory = ({userObj}) => {
     return (
         <div className="util-inventory" >
             <div className="inventory-btn" >
-                <box-icon name='briefcase-alt-2' onClick={onOpenInventory}/>
+                <box-icon name='briefcase-alt-2' onClick={openInventory}/>
             </div>
         </div>
     )

@@ -1,5 +1,4 @@
 import { updateEquipmentData } from "./FirestoreAPI";
-
 // 1
 export const onLoadScreen = (uid, information) => {
     const main = document.querySelector(".main-page");

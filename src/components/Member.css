@@ -34,6 +34,21 @@
     flex-direction: column;
 }
 
+.character .character-btns {
+    text-align: center;
+    margin: 0 auto;
+    height: 30px;
+    width: 100%;
+}
+.character .character-btns span {
+    display: inline-block;
+    height: 100%;
+    width: 50%;
+    border: 1px solid black;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+}
+
 .character .character-equip {
     position: absolute;
     left: 20%;
@@ -100,18 +115,61 @@
 
 
 /* 스타일 수정 예정 */
+.character .character-concept {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    top: 30px;
+}
+
 .character .character-concept.hidden {
     display: none;
 }
 
 .character .character-concept .concept {
     position: absolute;
-    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
     color: #fff;
 }
 
-.character .character-concept .concept h1{
-    top: 5px;
+.character .character-concept .concept div {
+    background: rgba(0, 0, 0, 0.7);
+    margin-top: 20px;
+    width: 30%;
     border: 1px solid black;
-    margin-right: 0 auto;
+}
+
+.character .character-concept .concept .simple {
+    position: absolute;
+    left: calc(50% - 250px);
+}
+
+.character .character-concept .concept .appearance {
+    position: absolute;
+    width: 20%;
+    height: 75%;
+    left: 5%;
+    top: 10%;
+    overflow : auto;
+}
+
+.character .character-concept .concept .feature {
+    position: absolute;
+    height: 30%;
+    right: 5%;
+    top: 10%;
+    overflow : auto;
+}
+
+/* 여기 잘 계산하기 */
+.character .character-concept .concept .secret {
+    position: absolute;
+    height: 30%;
+    right: 5%;
+    top: 55%;
+    overflow : auto;
 }
